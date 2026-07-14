@@ -1,0 +1,186 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Employee Management System",
+    "description": "Postman collection for the Employee Management System REST API (Spring Boot).\n\nBase URL: http://localhost:8080\n\nCovers full CRUD: Create, Get All, Get By ID, Update, Delete.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "employeeId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create Employee",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "    const json = pm.response.json();",
+              "    if (json.id) {",
+              "        pm.collectionVariables.set('employeeId', json.id);",
+              "    }",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Harshitha\",\n  \"lastName\": \"A\",\n  \"email\": \"harshi@example.com\",\n  \"department\": \"Engineering\",\n  \"salary\": 55000,\n  \"phoneNumber\": \"9876543210\",\n  \"joiningDate\": \"2026-07-13\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees"]
+        },
+        "description": "Creates a new employee. Returns 201 Created with the saved employee (including generated id).\n\nBusiness rules:\n- Email must be unique (409 on duplicate)\n- Phone number must be exactly 10 digits\n- Salary must be positive\n- Joining date is required (YYYY-MM-DD)"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employee - Second",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Rahul\",\n  \"lastName\": \"Sharma\",\n  \"email\": \"rahul.sharma@example.com\",\n  \"department\": \"Human Resources\",\n  \"salary\": 48000,\n  \"phoneNumber\": \"9123456780\",\n  \"joiningDate\": \"2025-01-15\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees"]
+        },
+        "description": "Creates a second employee for multi-record testing."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Employees",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees"]
+        },
+        "description": "Returns the full list of employees. Status: 200 OK."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Employee By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees", "{{employeeId}}"]
+        },
+        "description": "Fetches a single employee by ID. Returns 404 if not found.\n\nUses collection variable `employeeId` (auto-set after Create Employee)."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Harshitha\",\n  \"lastName\": \"A\",\n  \"email\": \"harshi_updated@example.com\",\n  \"department\": \"Computer Science\",\n  \"salary\": 60000,\n  \"phoneNumber\": \"9876543210\",\n  \"joiningDate\": \"2026-07-13\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees", "{{employeeId}}"]
+        },
+        "description": "Fully updates an existing employee. Preserves the original ID. Returns 404 if not found, 409 if email is taken by another employee."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Employee",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees", "{{employeeId}}"]
+        },
+        "description": "Deletes an employee by ID. Returns 204 No Content on success, 404 if not found."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Employee - Validation Error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"A\",\n  \"email\": \"not-an-email\",\n  \"department\": \"Engineering\",\n  \"salary\": -100,\n  \"phoneNumber\": \"123\",\n  \"joiningDate\": null\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/employees",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees"]
+        },
+        "description": "Negative test: invalid payload to demonstrate 400 Bad Request validation responses."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Employee - Not Found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/employees/99999",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "employees", "99999"]
+        },
+        "description": "Negative test: non-existent ID returns 404 Not Found with ErrorResponse body."
+      },
+      "response": []
+    }
+  ]
+}

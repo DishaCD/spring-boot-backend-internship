@@ -1,0 +1,25 @@
+# Maven build output
+target/
+
+# Logging output
+logs/
+
+# Eclipse IDE files
+.classpath
+.project
+.settings/
+
+# VS Code files
+.vscode/
+*.code-workspace
+
+# IntelliJ IDEA files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# OS temporary files
+Thumbs.db
+Desktop.ini
+.DS_Store

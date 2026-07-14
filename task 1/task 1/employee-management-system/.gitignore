@@ -1,0 +1,50 @@
+# Compiled class files
+*.class
+target/
+build/
+out/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Spring Boot
+spring-boot-*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Environment / secrets
+.env
+*.env
+application-local.properties
+application-secret.properties
+
+# H2 database files (if file-based mode is ever used)
+*.db
+*.mv.db
+*.trace.db

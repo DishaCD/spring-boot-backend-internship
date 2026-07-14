@@ -1,0 +1,27 @@
+# Ignore all target directories
+**/target/
+**/.m2/
+
+# Ignore zip files
+*.zip
+
+# Ignore temporary/raw images
+WhatsApp Image *.jpeg
+WhatsApp Image *.jpg
+*.jpeg
+*.jpg
+
+# Ignore IDE files
+**/.vscode/
+**/.idea/
+*.iws
+*.iml
+*.ipr
+.classpath
+.project
+.settings/
+.factorypath
+
+# OS files
+.DS_Store
+Thumbs.db
